@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	       http://www.springframework.org/schema/context
+	       http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<bean class="com.java.spring.Example001.LoginController">
+		<property name="authenticator">
+			<bean class="com.java.spring.Example001.MockAuthenticator" />
+		</property>
+	</bean>
+	
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/viewjsp/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+	
+	<bean	id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>messages.validation</value>
+				<value>messages.label</value>
+			</list>
+		</property>	
+	</bean>
+
+
+	<!-- Example002 -->
+	<bean class="com.java.spring.Example002.RegistMemberController"/>
+	
+	<!-- Example003 -->
+	
+		<bean class="com.java.spring.Example003.ArticleController" />
+	
+	<!-- Example004 -->
+	
+	<bean class="com.java.spring.Example004.LocaleChangeController">
+		<property name="localeResolver" ref="localeResolver"></property>
+	</bean>
+	
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver" />
+
+	<!-- Example005 -->
+	
+	<bean class="com.java.spring.Example005.LocaleChangeController2"/>
+	
+	<bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor"
+			p:paramName="language"/>
+			
+	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" >
+		<property name="interceptors">
+			<list>
+				<ref bean="localeChangeInterceptor"/>
+			</list>
+		</property>
+	</bean>
+	
+</beans>
